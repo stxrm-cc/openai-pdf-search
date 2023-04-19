@@ -22,8 +22,7 @@ def timeit(func):
         end_time = time.perf_counter()
         total_time = end_time - start_time
         #print(f'Function {func.__name__}{args} {kwargs} took {total_time:.4f} seconds to execute')
-        print(f'{f}\n/!\ Debug:\n-> Function "{func.__name__}" took {total_time:.4f} seconds to execute')
-
+        print(f'{f}\n/!\ Debug:\n-> Function "{func.__name__}" defined at line {func.__code__.co_firstlineno + 1} took {total_time:.4f} seconds to execute')
         return result
     
     return timeit_wrapper
@@ -139,4 +138,4 @@ if __name__ == "__main__":
     instances = r.read_string(content, word)
     final = r.subject_finder_main(word, instances)
     ret = "\n".join(f" {count+1} - Line {value[0]}: '{value[1]}'" for count, value in enumerate(final[1]))
-    print(f'{f}\n• Document: {final[0]}\n-> Instances:\n{ret}\n{f}')
+    print(f'{f}\n• Document: {final[0]}\n-> Occurence(s):\n{ret}\n{f}')
