@@ -29,17 +29,6 @@ def install_req(req: list) -> None:
     return
 
 
-## Main 1
-import pypdf as pdf
-import openai
-
-'''
-Complexity in terms of OpenAI requests: O(n*3) - where n: number of instances found
-- BEST CASE: 0 requests (0 instance)
-- SECOND BEST CASE: 3 requests (1 instance)
-'''
-
-
 ## Helper function(s)
 from functools import wraps
 import time
@@ -51,7 +40,6 @@ def timeit(func) -> None:
         result = func(*args, **kwargs)
         end_time = time.perf_counter()
         total_time = end_time - start_time
-        #print(f'Function {func.__name__}{args} {kwargs} took {total_time:.4f} seconds to execute')
         print(f'{f}\n/!\ Debug:\n-> Function "{func.__name__}" defined at line {func.__code__.co_firstlineno + 1} took {total_time:.4f} seconds to execute')
         return result
     
@@ -59,17 +47,27 @@ def timeit(func) -> None:
 
 
 ## Main 2
+import pypdf as pdf
+import openai
+
+'''
+Complexity in terms of OpenAI requests: O(n*3) - where n: number of instances found
+- BEST CASE: 0 requests (0 instance)
+- SECOND BEST CASE: 3 requests (1 instance)
+'''
+
 class Reader:
     docs = []
     def __init__(self):
         # Input
         self.r = int(input(f"{f}\nHow many docs to read?\n-> "))
         for i in range(self.r):
-            inp = input(f"{f}\nFile {i+1} location:\n-> ").lower()
-            if not ".pdf" in inp:
+            while True:
+                inp = input(f"{f}\nFile {i+1} location:\n-> ").lower()
+                if ".pdf" in inp:
+                    Reader.docs.append(inp)
+                    break
                 print(f"{f}\nForgetting something? Hint: file extension")
-                Reader()
-            Reader.docs.append(inp)
         
         
     def read_for_n(self) -> list:
