@@ -119,7 +119,10 @@ class Reader:
 
 
 class EvalAI:
-    openai.api_key = "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"
+    # Read openAI key from "key.txt" which should only contain the key and no other form of text
+    with open('key.txt', 'r') as f:
+        openai.api_key = f.read().splitlines()[0]
+
     def __init__(self):
         self.role = "user"
 
